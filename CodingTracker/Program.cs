@@ -10,7 +10,22 @@ namespace CodingTracker
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("back To it , this is a new change"); Console.WriteLine("back To it , this is a new change"); Console.WriteLine("back To it , this is a new change"); Console.WriteLine("back To it , this is a new change"); Console.WriteLine("back To it , this is a new change"); Console.WriteLine("back To it , this is a new change");
+            Medhod1();
+            Medhod2();
+            Medhod3();
+
+        }
+        public static void Medhod1()
+        {
+            Console.WriteLine("This");
+        }
+        public static void Medhod2()
+        {
+            Console.WriteLine("is");
+        }
+        public static void Medhod3()
+        {
+            Console.WriteLine("a new Branch");
         }
     }
 }
