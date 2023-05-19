@@ -40,15 +40,19 @@ namespace CodingTracker
                     switch (userChoice)
                     {
                         case "a":
+                            Console.Clear();
                             Console.WriteLine("add");
                             break;
                         case "s":
+                            Console.Clear();
                             Console.WriteLine("sub");
                             break;
                         case "m":
+                            Console.Clear();
                             Console.WriteLine("mul");
                             break;
                         case "d":
+                            Console.Clear();
                             Console.WriteLine("div");
 
                             break;
@@ -56,7 +60,6 @@ namespace CodingTracker
                 else
                 {
                     {
-                        Console.WriteLine(userChoice == "a");
                         Console.Clear();
                         Console.WriteLine("invalid Choice");
                         Console.WriteLine();
