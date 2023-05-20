@@ -34,13 +34,18 @@ namespace CodingTracker
                 }
                 else if (userChoice == "h")
                 {
-                    if (history != null)
+                    Console.Clear();
+                    Console.WriteLine("Recorded answers :");
+                    Console.WriteLine("-----------------");
+                    if (history.Count == 0)
                     {
+                        Console.WriteLine("no recorded answers");
+                        Console.WriteLine();
 
-                        foreach (var item in history)
-                        {
-                            Console.WriteLine(item);
-                        }
+                    }
+                    foreach (var item in history)
+                    {
+                        Console.WriteLine(item);
                     }
                 }
 
@@ -48,7 +53,7 @@ namespace CodingTracker
                 {
                     {
                         Console.Clear();
-                        Console.ForegroundColor= ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("invalid Choice");
                         Console.WriteLine();
                     }
@@ -60,24 +65,7 @@ namespace CodingTracker
                 int firstNum = rn.Next(0, 100);
                 int secondNum = rn.Next(0, 100);
                 int sum = 0;
-                //switch (oper)
-                //{
-                //    case "+":
-                //        sum = firstNum + secondNum;
-                //        break;
-                //    case "-":
-                //        sum = firstNum - secondNum;
-                //        break;
-                //    case "*":
-                //        sum = firstNum * secondNum;
-                //        break;
-                //    case "/":
-                //        sum = firstNum / secondNum;
-                //        break;
 
-                //    default:
-                //        break;
-                //}
                 int userAnswer;
                 switch (oper)
                 {
@@ -126,13 +114,13 @@ namespace CodingTracker
                 if (userAnswer != sum)
                 {
                     answer = false;
-                    Console.ForegroundColor= ConsoleColor.Red;
-                    Console.WriteLine("Wrong answer");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Wrong answer , the correct answer is {sum}");
                 }
                 else
                 {
                     answer = true;
-                    Console.ForegroundColor= ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Correct");
 
                 }
