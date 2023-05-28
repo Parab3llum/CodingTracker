@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace CodingTracker
 {
@@ -11,6 +12,9 @@ namespace CodingTracker
             private string userChoice;
             List<string> history = new List<string>();
             Random rn = new Random();
+            //Timer t = new Timer(TimerCountDown, null ,0, 1000);
+
+
             public void Run()
             {
                 while (running == true)
@@ -21,18 +25,75 @@ namespace CodingTracker
                         "S - Subtraction\n" +
                         "M - Multiplication\n" +
                         "D - Division\n" +
-                        "H - Show History");
+                        "H - Show History\n"); 
+                    //+
+                    //    "L - Choose Difficulty level");
                     userPickChoice();
                 }
             }
             public void userPickChoice()
             {
+
                 userChoice = Console.ReadLine().ToLower();
-                if (userChoice == "a" || userChoice == "s" || userChoice == "m" || userChoice == "d")
+                switch (userChoice)
                 {
-                    OperationMode(userChoice);
+                    case "a":
+                        DifficultyLevel(userChoice);
+                        break;
+                    case "s":
+                        DifficultyLevel(userChoice);
+                        break;
+                    case "m":
+                        DifficultyLevel(userChoice);
+                        break;
+                    case "d":
+                        DifficultyLevel(userChoice);
+                        break;
+                    case "h":
+                        ShowHistory(userChoice);
+                        break;
+                    
+                    default:
+                        ErrMessage();
+                        break;
                 }
-                else if (userChoice == "h")
+            }
+
+            private void DifficultyLevel(string userChoice)
+            {
+                int firstNumber;
+                int secondNumber;
+                Console.WriteLine("Enter difficulty level:\n" +
+                    "E - Easy\n" +
+                    "M - Medium\n" +
+                    "H - Hard\n");
+                string level = Console.ReadLine();
+                switch (level)
+                {
+                    case "e":
+                        firstNumber = rn.Next(0, 9);
+                        secondNumber = rn.Next(0, 9);
+                        OperationMode(userChoice,level, firstNumber, secondNumber);
+                        break;
+                    case "m":
+                        firstNumber = rn.Next(0, 100);
+                        secondNumber = rn.Next(0, 100);
+                        OperationMode(userChoice, level, firstNumber, secondNumber);
+                        break;
+                    case "d":
+                        firstNumber = rn.Next(0, 100);
+                        secondNumber = rn.Next(0, 100);
+                        OperationMode(userChoice, level, firstNumber, secondNumber);
+                        break;
+                    default:
+                        ErrMessage();
+                        break;
+                }
+            }
+
+            private void ShowHistory(string choice)
+            {
+                if (userChoice == "h")
                 {
                     Console.Clear();
                     Console.WriteLine("Recorded answers :");
@@ -49,37 +110,35 @@ namespace CodingTracker
                     }
                 }
 
-                else
-                {
-                    {
-                        Console.Clear();
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("invalid Choice");
-                        Console.WriteLine();
-                    }
-                }
             }
-            public void OperationMode(string oper)
+
+            private static void ErrMessage()
             {
                 Console.Clear();
-                int firstNum = rn.Next(0, 100);
-                int secondNum = rn.Next(0, 100);
-                int sum = 0;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("invalid Choice");
+                Console.WriteLine();
+            }
 
-                int userAnswer;
+            public void OperationMode(string oper, string level, int numOne, int numTwo)
+            {
+                Console.Clear();
+                //int firstNum = rn.Next(0, 100);
+                //int secondNum = rn.Next(0, 100);
+                int sum = 0;
                 switch (oper)
                 {
                     case "a":
-                        Check(firstNum, secondNum, sum, "+");
+                        Check(numOne, numTwo, sum, "+");
                         break;
                     case "s":
-                        Check(firstNum, secondNum, sum, "-");
+                        Check(numOne, numTwo, sum, "-");
                         break;
                     case "m":
-                        Check(firstNum, secondNum, sum, "*");
+                        Check(numOne, numTwo, sum, "*");
                         break;
                     case "d":
-                        Check(firstNum, secondNum, sum, "/");
+                        Check(numOne, numTwo, sum, "/");
                         break;
                 }
 
@@ -128,6 +187,12 @@ namespace CodingTracker
                 history.Add(currentQuestion);
                 running = true;
             }
+
+            private static void TimerCountDown(object state)
+            {
+                Console.WriteLine();
+            }
+
         }
     }
 }

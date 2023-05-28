@@ -16,6 +16,11 @@ namespace CodingTracker
             Console.WriteLine("Welcome To the Math Game , Where you choose type of Game and answer questions accordingly");
             var game = new Runner();
             game.Run();
+
+            // # Add difficulty
+            // # Add Timer 
+            // # add function to let user to pick number of questions 
+            // # create random game - randomize opperations
         }
     }
 }
