@@ -12,6 +12,7 @@ namespace CodingTracker
             private string userChoice;
             List<string> history = new List<string>();
             Random rn = new Random();
+            int counter;
             //Timer t = new Timer(TimerCountDown, null ,0, 1000);
 
 
@@ -71,19 +72,21 @@ namespace CodingTracker
                 switch (level)
                 {
                     case "e":
+                        counter= 30;
                         firstNumber = rn.Next(0, 9);
                         secondNumber = rn.Next(0, 9);
-                        OperationMode(userChoice,level, firstNumber, secondNumber);
+                        OperationMode(userChoice, firstNumber, secondNumber);
                         break;
                     case "m":
+                        counter = 20;
                         firstNumber = rn.Next(0, 100);
                         secondNumber = rn.Next(0, 100);
-                        OperationMode(userChoice, level, firstNumber, secondNumber);
+                        OperationMode(userChoice, firstNumber, secondNumber);
                         break;
-                    case "d":
+                    case "H":
                         firstNumber = rn.Next(0, 100);
                         secondNumber = rn.Next(0, 100);
-                        OperationMode(userChoice, level, firstNumber, secondNumber);
+                        OperationMode(userChoice, firstNumber, secondNumber);
                         break;
                     default:
                         ErrMessage();
@@ -120,7 +123,7 @@ namespace CodingTracker
                 Console.WriteLine();
             }
 
-            public void OperationMode(string oper, string level, int numOne, int numTwo)
+            public void OperationMode(string oper,int numOne, int numTwo)
             {
                 Console.Clear();
                 //int firstNum = rn.Next(0, 100);
