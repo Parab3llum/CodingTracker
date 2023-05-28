@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Timers;
 
 namespace CodingTracker
 {
@@ -12,12 +12,17 @@ namespace CodingTracker
             private string userChoice;
             List<string> history = new List<string>();
             Random rn = new Random();
-            int counter;
-            //Timer t = new Timer(TimerCountDown, null ,0, 1000);
+            static int counter;
+            //Timer tmr = new Timer(TimerCountDown, null, 0, 1000);
+            static Timer tmr = new Timer();
+
+
 
 
             public void Run()
             {
+                tmr.Elapsed += TimerCountDown;
+                tmr.Interval = 1000;
                 while (running == true)
                 {
                     Console.ForegroundColor = ConsoleColor.White;
@@ -26,7 +31,7 @@ namespace CodingTracker
                         "S - Subtraction\n" +
                         "M - Multiplication\n" +
                         "D - Division\n" +
-                        "H - Show History\n"); 
+                        "H - Show History\n");
                     //+
                     //    "L - Choose Difficulty level");
                     userPickChoice();
@@ -53,7 +58,7 @@ namespace CodingTracker
                     case "h":
                         ShowHistory(userChoice);
                         break;
-                    
+
                     default:
                         ErrMessage();
                         break;
@@ -72,7 +77,7 @@ namespace CodingTracker
                 switch (level)
                 {
                     case "e":
-                        counter= 30;
+                        counter = 30;
                         firstNumber = rn.Next(0, 9);
                         secondNumber = rn.Next(0, 9);
                         OperationMode(userChoice, firstNumber, secondNumber);
@@ -83,7 +88,8 @@ namespace CodingTracker
                         secondNumber = rn.Next(0, 100);
                         OperationMode(userChoice, firstNumber, secondNumber);
                         break;
-                    case "H":
+                    case "h":
+                        counter = 20;
                         firstNumber = rn.Next(0, 100);
                         secondNumber = rn.Next(0, 100);
                         OperationMode(userChoice, firstNumber, secondNumber);
@@ -123,11 +129,12 @@ namespace CodingTracker
                 Console.WriteLine();
             }
 
-            public void OperationMode(string oper,int numOne, int numTwo)
+            public void OperationMode(string oper, int numOne, int numTwo)
             {
                 Console.Clear();
                 //int firstNum = rn.Next(0, 100);
                 //int secondNum = rn.Next(0, 100);
+
                 int sum = 0;
                 switch (oper)
                 {
@@ -150,6 +157,8 @@ namespace CodingTracker
 
             public void Check(int firstNum, int secondNum, int sum, string oper)
             {
+                tmr.Start();
+
                 string currentQuestion = $"{firstNum} {oper} {secondNum} = ? ";
                 int userAnswer;
                 bool answer;
@@ -176,11 +185,13 @@ namespace CodingTracker
                 if (userAnswer != sum)
                 {
                     answer = false;
+                    tmr.Stop();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Wrong answer , the correct answer is {sum}");
                 }
                 else
                 {
+                    tmr.Stop();
                     answer = true;
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Correct");
@@ -191,9 +202,20 @@ namespace CodingTracker
                 running = true;
             }
 
-            private static void TimerCountDown(object state)
+            private static void TimerCountDown(object obj, ElapsedEventArgs e)
             {
-                Console.WriteLine();
+                if (counter > 0)
+                {
+                    counter--;
+
+                    Console.WriteLine(counter);
+                }
+                else if (counter <= 0)
+                {
+                    tmr.Stop();
+                    Console.WriteLine("Time is up");
+                }
+
             }
 
         }
