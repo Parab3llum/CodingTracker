@@ -17,8 +17,8 @@ namespace CodingTracker
             var game = new Runner();
             game.Run();
 
-            // # Add difficulty
-            // # Add Timer 
+            // # Add difficulty V
+            // # Add Timer  V
             // # add function to let user to pick number of questions 
             // # create random game - randomize opperations
         }
