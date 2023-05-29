@@ -40,6 +40,7 @@ namespace CodingTracker
             }
             public void userPickChoice()
             {
+                random = false;
 
                 userChoice = Console.ReadLine().ToLower();
                 switch (userChoice)
@@ -181,7 +182,7 @@ namespace CodingTracker
                     string[] operators = { "a", "s", "m", "d" };
                     Random rnd = new Random();
                     oper = operators[rnd.Next(0, operators.Length)];
-                    random = false;
+                    //random = false;
                 }
                 Console.WriteLine();
 
@@ -252,7 +253,7 @@ namespace CodingTracker
                 currentQuestion += (userAnswer.ToString() + " " + answer.ToString());
                 history.Add(currentQuestion);
                 running = true;
-                random = false;
+                //random = false;
             }
 
             private static void TimerCountDown(object obj, ElapsedEventArgs e)

@@ -20,7 +20,7 @@ namespace CodingTracker
             // # Add difficulty V
             // # Add Timer  V
             // # add function to let user to pick number of questions V
-            // # create random game - randomize opperations
+            // # create random game - randomize opperations V
         }
     }
 }
