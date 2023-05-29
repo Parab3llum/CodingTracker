@@ -10,9 +10,11 @@ namespace CodingTracker
         {
             private bool running = true;
             private string userChoice;
-            List<string> history = new List<string>();
+            private List<string> history = new List<string>();
             Random rn = new Random();
+            private int userQuestionsNum;
             static int counter;
+            Difficuty difficuty;
             //Timer tmr = new Timer(TimerCountDown, null, 0, 1000);
             static Timer tmr = new Timer();
 
@@ -25,15 +27,12 @@ namespace CodingTracker
                 tmr.Interval = 1000;
                 while (running == true)
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("Choose your type of game \n" +
                         "A - Addition\n" +
                         "S - Subtraction\n" +
                         "M - Multiplication\n" +
                         "D - Division\n" +
                         "H - Show History\n");
-                    //+
-                    //    "L - Choose Difficulty level");
                     userPickChoice();
                 }
             }
@@ -67,8 +66,6 @@ namespace CodingTracker
 
             private void DifficultyLevel(string userChoice)
             {
-                int firstNumber;
-                int secondNumber;
                 Console.WriteLine("Enter difficulty level:\n" +
                     "E - Easy\n" +
                     "M - Medium\n" +
@@ -77,26 +74,61 @@ namespace CodingTracker
                 switch (level)
                 {
                     case "e":
-                        counter = 30;
-                        firstNumber = rn.Next(0, 9);
-                        secondNumber = rn.Next(0, 9);
-                        OperationMode(userChoice, firstNumber, secondNumber);
+                        difficuty = Difficuty.Easy;
+                        NumberOfQuestions();
                         break;
                     case "m":
-                        counter = 20;
-                        firstNumber = rn.Next(0, 100);
-                        secondNumber = rn.Next(0, 100);
-                        OperationMode(userChoice, firstNumber, secondNumber);
+                        difficuty = Difficuty.Medium;
+                        NumberOfQuestions();
                         break;
                     case "h":
-                        counter = 20;
-                        firstNumber = rn.Next(0, 100);
-                        secondNumber = rn.Next(0, 100);
-                        OperationMode(userChoice, firstNumber, secondNumber);
+                        difficuty = Difficuty.Hard;
+                        NumberOfQuestions();
                         break;
                     default:
                         ErrMessage();
                         break;
+                }
+            }
+
+            private void NumberOfQuestions()
+            {
+                Console.WriteLine("Enter number of questions you would like to answer");
+                int.TryParse(Console.ReadLine(), out userQuestionsNum);
+                if (userQuestionsNum == 0)
+                {
+                    ErrMessage();
+                }
+                else
+                {
+
+                    for (int i = userQuestionsNum; i > 0; i--)
+                    {
+                        int firstNumber = default;
+                        int secondNumber = default;
+                        switch (difficuty)
+                        {
+                            case Difficuty.Easy:
+                                counter = 30;
+                                firstNumber = rn.Next(0, 11);
+                                secondNumber = rn.Next(0, 11);
+                                break;
+                            case Difficuty.Medium:
+                                counter = 20;
+                                firstNumber = rn.Next(0, 51);
+                                secondNumber = rn.Next(0, 51);
+                                break;
+                            case Difficuty.Hard:
+                                counter = 15;
+                                firstNumber = rn.Next(0, 101);
+                                secondNumber = rn.Next(0, 101);
+                                break;
+                            default:
+                                break;
+                        }
+
+                        OperationMode(userChoice, firstNumber, secondNumber);
+                    }
                 }
             }
 
@@ -126,14 +158,15 @@ namespace CodingTracker
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("invalid Choice");
+                Console.ForegroundColor = ConsoleColor.White;
+
                 Console.WriteLine();
             }
 
             public void OperationMode(string oper, int numOne, int numTwo)
             {
+
                 Console.Clear();
-                //int firstNum = rn.Next(0, 100);
-                //int secondNum = rn.Next(0, 100);
 
                 int sum = 0;
                 switch (oper)
@@ -188,6 +221,7 @@ namespace CodingTracker
                     tmr.Stop();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Wrong answer , the correct answer is {sum}");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
                 {
@@ -195,6 +229,7 @@ namespace CodingTracker
                     answer = true;
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Correct");
+                    Console.ForegroundColor = ConsoleColor.White;
 
                 }
                 currentQuestion += (userAnswer.ToString() + " " + answer.ToString());
@@ -217,7 +252,12 @@ namespace CodingTracker
                 }
 
             }
-
+            public enum Difficuty
+            {
+                Easy,
+                Medium,
+                Hard
+            }
         }
     }
 }
