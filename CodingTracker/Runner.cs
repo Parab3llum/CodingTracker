@@ -15,8 +15,8 @@ namespace CodingTracker
             private int userQuestionsNum;
             static int counter;
             Difficuty difficuty;
-            //Timer tmr = new Timer(TimerCountDown, null, 0, 1000);
             static Timer tmr = new Timer();
+            bool random = false;
 
 
 
@@ -32,7 +32,9 @@ namespace CodingTracker
                         "S - Subtraction\n" +
                         "M - Multiplication\n" +
                         "D - Division\n" +
-                        "H - Show History\n");
+                        "H - Show History\n" +
+                        "Q - To exit the program\n" +
+                        "R - Random mode");
                     userPickChoice();
                 }
             }
@@ -57,7 +59,14 @@ namespace CodingTracker
                     case "h":
                         ShowHistory(userChoice);
                         break;
+                    case "q":
+                        running = false;
+                        break;
+                    case "r":
+                        random = true;
+                        DifficultyLevel(userChoice);
 
+                        break;
                     default:
                         ErrMessage();
                         break;
@@ -70,7 +79,9 @@ namespace CodingTracker
                     "E - Easy\n" +
                     "M - Medium\n" +
                     "H - Hard\n");
+
                 string level = Console.ReadLine();
+
                 switch (level)
                 {
                     case "e":
@@ -126,7 +137,6 @@ namespace CodingTracker
                             default:
                                 break;
                         }
-
                         OperationMode(userChoice, firstNumber, secondNumber);
                     }
                 }
@@ -150,6 +160,7 @@ namespace CodingTracker
                         Console.WriteLine(item);
                     }
                 }
+                Console.WriteLine();
 
             }
 
@@ -165,8 +176,14 @@ namespace CodingTracker
 
             public void OperationMode(string oper, int numOne, int numTwo)
             {
-
-                Console.Clear();
+                if (random == true)
+                {
+                    string[] operators = { "a", "s", "m", "d" };
+                    Random rnd = new Random();
+                    oper = operators[rnd.Next(0, operators.Length)];
+                    random = false;
+                }
+                Console.WriteLine();
 
                 int sum = 0;
                 switch (oper)
@@ -235,6 +252,7 @@ namespace CodingTracker
                 currentQuestion += (userAnswer.ToString() + " " + answer.ToString());
                 history.Add(currentQuestion);
                 running = true;
+                random = false;
             }
 
             private static void TimerCountDown(object obj, ElapsedEventArgs e)
